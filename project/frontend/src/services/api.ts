@@ -55,10 +55,12 @@ api.interceptors.response.use(
 
       switch (status) {
         case 401:
-          // 未授权，清除token并跳转登录
-          localStorage.removeItem('access_token')
-          localStorage.removeItem('refresh_token')
-          window.location.href = '/login'
+          // 未授权，清除token
+          // 开发模式: 注释掉自动跳转,允许无登录访问
+          // localStorage.removeItem('access_token')
+          // localStorage.removeItem('refresh_token')
+          // window.location.href = '/login'
+          message.error('未授权访问，但允许继续浏览(开发模式)')
           break
         case 403:
           message.error('没有权限访问此资源')

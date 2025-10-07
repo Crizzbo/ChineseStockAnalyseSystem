@@ -15,7 +15,9 @@ const UserInfo: React.FC = () => {
 
   const handleLogout = async () => {
     await dispatch(logoutAsync())
-    navigate('/login')
+    // 开发模式: 注释掉跳转登录
+    // navigate('/login')
+    window.location.reload() // 刷新页面清除状态
   }
 
   if (!isLoggedIn || !user) {

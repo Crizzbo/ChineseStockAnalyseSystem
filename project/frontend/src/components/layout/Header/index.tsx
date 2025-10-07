@@ -34,7 +34,9 @@ const Header: React.FC = () => {
 
   const handleLogout = () => {
     dispatch(logoutAsync())
-    navigate('/login')
+    // 开发模式: 注释掉跳转登录,退出后留在当前页面
+    // navigate('/login')
+    navigate('/dashboard')
   }
 
   const userMenuItems: MenuProps['items'] = [
