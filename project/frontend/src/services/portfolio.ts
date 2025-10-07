@@ -61,7 +61,7 @@ class PortfolioService {
   /**
    * 获取投资组合列表
    */
-  async getPortfolios(page = 1, per_page = 20): Promise<PaginatedResponse<Portfolio>> {
+  async getPortfolios(page = 1, per_page = 20): Promise<{ data: Portfolio[], total: number, page: number, per_page: number }> {
     const queryParams = new URLSearchParams()
     queryParams.append('page', page.toString())
     queryParams.append('per_page', per_page.toString())

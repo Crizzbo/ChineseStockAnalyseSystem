@@ -10,7 +10,7 @@ from app import db
 from app.models.portfolio import Portfolio, PortfolioStock
 from app.models.watchlist import WatchList, WatchListStock
 from app.services.stock_data import stock_service
-from app.utils.response import success_response, error_response, paginated_response
+from app.utils.response import success_response, error_response
 
 portfolio_bp = Blueprint('portfolio', __name__)
 
@@ -72,13 +72,13 @@ def get_portfolios():
         portfolios_data = [portfolio.to_dict(stock_prices=stock_prices)
                           for portfolio in portfolios_pagination.items]
 
-        return paginated_response(
-            items=portfolios_data,
-            total=portfolios_pagination.total,
-            page=page,
-            per_page=per_page,
-            message="获取投资组合成功"
-        )
+        # 返回适配前端的格式
+        return success_response({
+            'data': portfolios_data,
+            'total': portfolios_pagination.total,
+            'page': page,
+            'per_page': per_page
+        }, message="获取投资组合成功")
 
     except Exception as e:
         current_app.logger.error(f'获取投资组合失败: {str(e)}')

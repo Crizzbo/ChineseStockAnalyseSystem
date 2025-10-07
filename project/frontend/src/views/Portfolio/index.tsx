@@ -118,7 +118,7 @@ const Portfolio: React.FC = () => {
       const response = await portfolioService.getPortfolios()
 
       // 将API数据转换为组件需要的格式
-      const portfolioData = response.data.map((portfolio: any) => ({
+      const portfolioData = (response.data || []).map((portfolio: any) => ({
         id: portfolio.id.toString(),
         name: portfolio.name,
         description: portfolio.description || '',
