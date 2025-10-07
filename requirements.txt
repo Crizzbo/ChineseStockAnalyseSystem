@@ -1,0 +1,45 @@
+# AKShare股票分析工具依赖包
+
+# 核心数据获取库
+akshare>=1.9.0
+
+# 数据处理和分析
+pandas>=1.5.0
+numpy>=1.21.0
+
+# 缓存支持
+redis>=4.0.0
+
+# 日期和时间处理
+python-dateutil>=2.8.0
+
+# 配置管理
+pyyaml>=6.0
+
+# 日志增强
+loguru>=0.6.0
+
+# 可选依赖（用于高级功能）
+# 数据可视化
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# 机器学习（可选，用于高级分析）
+scikit-learn>=1.0.0
+
+# 异步支持（可选）
+aiohttp>=3.8.0
+asyncio>=3.4.3
+
+# 数据库支持（可选）
+sqlalchemy>=1.4.0
+pymongo>=4.0.0
+
+# API限流
+ratelimit>=2.2.0
+
+# 数据压缩
+snappy>=0.6.0
+
+# 进度条（用于批量数据处理）
+tqdm>=4.64.0
