@@ -1,0 +1,269 @@
+@use '@assets/styles/variables' as *;
+
+.stock-search {
+  position: relative;
+  width: 100%;
+
+  .ant-input-search {
+    .ant-input-group {
+      .ant-input-affix-wrapper {
+        border-radius: map-get($border-radius, base);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+
+        &:hover,
+        &:focus-within {
+          box-shadow: 0 4px 12px rgba(24, 144, 255, 0.15);
+          border-color: map-get($primary-colors, main);
+        }
+
+        .ant-input {
+          font-size: map-get($font-sizes, base);
+
+          &::placeholder {
+            color: map-get($text-colors, tertiary);
+          }
+        }
+      }
+    }
+  }
+
+  .search-results-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    margin-top: map-get($spacing, xs);
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: $box-shadow-large;
+    border-radius: map-get($border-radius, base);
+
+    .ant-list {
+      .ant-list-item {
+        &.search-result-item {
+          padding: map-get($spacing, md);
+          cursor: pointer;
+          border-bottom: 1px solid #f0f0f0;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background-color: #fafafa;
+          }
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .ant-list-item-action {
+            margin-left: map-get($spacing, sm);
+
+            .watch-btn {
+              border: none;
+              background: none;
+              cursor: pointer;
+              padding: map-get($spacing, xs);
+              border-radius: 50%;
+              transition: all 0.2s ease;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              &:hover {
+                background-color: rgba(24, 144, 255, 0.1);
+                color: map-get($primary-colors, main);
+              }
+            }
+          }
+
+          .stock-item-content {
+            width: 100%;
+
+            .stock-basic-info {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              margin-bottom: map-get($spacing, xs);
+
+              .stock-identity {
+                display: flex;
+                align-items: center;
+                flex: 1;
+
+                .stock-names {
+                  margin-left: map-get($spacing, sm);
+
+                  .ant-typography {
+                    display: block;
+                    margin: 0;
+                    line-height: 1.2;
+                  }
+
+                  .stock-symbol {
+                    font-size: map-get($font-sizes, small);
+                    margin-top: 2px;
+                  }
+                }
+              }
+
+              .stock-price-info {
+                text-align: right;
+
+                .price-main {
+                  .current-price {
+                    font-family: $font-family-monospace;
+                  }
+                }
+
+                .price-change {
+                  margin-top: 2px;
+
+                  .change-tag {
+                    margin: 0;
+                    font-family: $font-family-monospace;
+                    font-size: map-get($font-sizes, small);
+
+                    .anticon {
+                      margin-right: 2px;
+                    }
+                  }
+                }
+              }
+            }
+
+            .stock-metrics {
+              .metric-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+
+                .ant-typography:first-child {
+                  font-size: map-get($font-sizes, mini);
+                  margin-bottom: 2px;
+                }
+
+                .ant-typography:last-child {
+                  font-family: $font-family-monospace;
+                  font-size: map-get($font-sizes, small);
+                  font-weight: 500;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .search-loading,
+    .no-results {
+      padding: map-get($spacing, lg);
+      text-align: center;
+      color: map-get($text-colors, secondary);
+    }
+
+    .search-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    // 滚动条样式
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 2px;
+
+      &:hover {
+        background: #a8a8a8;
+      }
+    }
+  }
+}
+
+// 深色主题适配
+[data-theme='dark'] {
+  .stock-search {
+    .search-results-dropdown {
+      background: #1f1f1f;
+      border-color: #434343;
+
+      .ant-list-item {
+        border-bottom-color: #434343;
+
+        &:hover {
+          background-color: #262626;
+        }
+      }
+
+      .watch-btn {
+        &:hover {
+          background-color: rgba(24, 144, 255, 0.2);
+        }
+      }
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #262626;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #595959;
+
+      &:hover {
+        background: #737373;
+      }
+    }
+  }
+}
+
+// 响应式调整
+@media (max-width: map-get($breakpoints, sm)) {
+  .stock-search {
+    .search-results-dropdown {
+      margin-left: -#{map-get($spacing, md)};
+      margin-right: -#{map-get($spacing, md)};
+
+      .ant-list-item {
+        padding: map-get($spacing, sm);
+
+        .stock-item-content {
+          .stock-basic-info {
+            flex-direction: column;
+            align-items: flex-start;
+
+            .stock-price-info {
+              text-align: left;
+              margin-top: map-get($spacing, xs);
+              align-self: flex-end;
+            }
+          }
+
+          .stock-metrics {
+            margin-top: map-get($spacing, sm);
+
+            .ant-space {
+              width: 100%;
+              justify-content: space-around;
+            }
+
+            .metric-item {
+              .ant-typography:last-child {
+                font-size: map-get($font-sizes, mini);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

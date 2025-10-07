@@ -1,0 +1,51 @@
+@use '@assets/styles/variables' as *;
+
+.app-footer {
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+  padding: map-get($spacing, md) map-get($spacing, lg);
+  text-align: center;
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .copyright {
+      font-size: map-get($font-sizes, small);
+      color: map-get($text-colors, secondary);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: map-get($spacing, lg);
+
+      a {
+        font-size: map-get($font-sizes, small);
+        color: map-get($text-colors, tertiary);
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: map-get($primary-colors, main);
+        }
+      }
+    }
+  }
+
+  @media (max-width: map-get($breakpoints, sm)) {
+    padding: map-get($spacing, md);
+
+    .footer-content {
+      flex-direction: column;
+      gap: map-get($spacing, sm);
+
+      .footer-links {
+        justify-content: center;
+        gap: map-get($spacing, md);
+      }
+    }
+  }
+}

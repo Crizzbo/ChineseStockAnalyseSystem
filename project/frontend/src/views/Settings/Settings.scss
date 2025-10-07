@@ -1,0 +1,354 @@
+@use '@assets/styles/variables' as *;
+
+.settings {
+  .page-header {
+    margin-bottom: map-get($spacing, lg);
+    padding-bottom: map-get($spacing, md);
+    border-bottom: 1px solid #f0f0f0;
+
+    h2 {
+      margin: 0 0 map-get($spacing, xs) 0;
+      color: map-get($text-colors, primary);
+      display: flex;
+      align-items: center;
+
+      .anticon {
+        color: map-get($primary-colors, main);
+      }
+    }
+  }
+
+  .settings-form {
+    .settings-card {
+      height: 100%;
+      box-shadow: $box-shadow-small;
+      border-radius: map-get($border-radius, large);
+      transition: box-shadow 0.3s ease;
+
+      &:hover {
+        box-shadow: $box-shadow-medium;
+      }
+
+      .ant-card-head {
+        .ant-card-head-title {
+          font-weight: 600;
+          color: map-get($text-colors, primary);
+
+          .anticon {
+            color: map-get($primary-colors, main);
+            margin-right: map-get($spacing, xs);
+          }
+        }
+      }
+
+      .ant-card-body {
+        padding: map-get($spacing, lg);
+      }
+
+      .ant-form-item {
+        margin-bottom: map-get($spacing, md);
+
+        .ant-form-item-label > label {
+          font-weight: 500;
+          color: map-get($text-colors, secondary);
+          margin-bottom: map-get($spacing, xs);
+        }
+
+        .ant-form-item-control {
+          .ant-switch {
+            &.ant-switch-checked {
+              background-color: map-get($primary-colors, main);
+            }
+          }
+
+          .ant-radio-group {
+            .ant-radio-button-wrapper {
+              &.ant-radio-button-wrapper-checked {
+                background: map-get($primary-colors, main);
+                border-color: map-get($primary-colors, main);
+                color: #fff;
+
+                &:hover {
+                  background: map-get($primary-colors, dark);
+                  border-color: map-get($primary-colors, dark);
+                }
+              }
+            }
+          }
+
+          .ant-select {
+            .ant-select-selector {
+              border-radius: map-get($border-radius, base);
+
+              &:hover, &:focus {
+                border-color: map-get($primary-colors, main);
+              }
+            }
+          }
+
+          .ant-input-number {
+            border-radius: map-get($border-radius, base);
+
+            &:hover, &:focus {
+              border-color: map-get($primary-colors, main);
+            }
+          }
+        }
+
+        &.ant-form-item-has-success {
+          .ant-form-item-control-input {
+            .ant-input,
+            .ant-select-selector {
+              border-color: #52c41a;
+            }
+          }
+        }
+      }
+
+      .ant-divider {
+        margin: map-get($spacing, md) 0;
+        border-color: #f0f0f0;
+      }
+    }
+
+    .settings-actions {
+      text-align: center;
+      box-shadow: $box-shadow-small;
+      border-radius: map-get($border-radius, large);
+
+      .ant-card-body {
+        padding: map-get($spacing, lg);
+      }
+
+      .ant-btn {
+        &.ant-btn-primary {
+          background: map-get($primary-colors, main);
+          border-color: map-get($primary-colors, main);
+          border-radius: map-get($border-radius, base);
+          font-weight: 500;
+          padding: 0 map-get($spacing, lg);
+
+          &:hover {
+            background: map-get($primary-colors, dark);
+            border-color: map-get($primary-colors, dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(map-get($primary-colors, main), 0.3);
+          }
+        }
+
+        &.ant-btn-default {
+          border-radius: map-get($border-radius, base);
+          padding: 0 map-get($spacing, lg);
+
+          &:hover {
+            border-color: map-get($primary-colors, main);
+            color: map-get($primary-colors, main);
+          }
+        }
+      }
+    }
+  }
+}
+
+// 深色主题适配
+[data-theme='dark'] {
+  .settings {
+    .page-header {
+      border-bottom-color: #434343;
+
+      h2 {
+        color: rgba(255, 255, 255, 0.85);
+      }
+    }
+
+    .settings-form {
+      .settings-card,
+      .settings-actions {
+        background: #1f1f1f;
+        border-color: #434343;
+
+        .ant-card-head {
+          background: #1f1f1f;
+          border-color: #434343;
+
+          .ant-card-head-title {
+            color: rgba(255, 255, 255, 0.85);
+          }
+        }
+
+        .ant-card-body {
+          background: #1f1f1f;
+        }
+
+        .ant-form-item {
+          .ant-form-item-label > label {
+            color: rgba(255, 255, 255, 0.65);
+          }
+
+          .ant-form-item-control {
+            .ant-radio-group {
+              .ant-radio-button-wrapper {
+                background: #262626;
+                border-color: #434343;
+                color: rgba(255, 255, 255, 0.85);
+
+                &:hover {
+                  background: #303030;
+                  border-color: map-get($primary-colors, main);
+                  color: rgba(255, 255, 255, 0.85);
+                }
+
+                &.ant-radio-button-wrapper-checked {
+                  background: map-get($primary-colors, main);
+                  border-color: map-get($primary-colors, main);
+                  color: #fff;
+
+                  &:hover {
+                    background: map-get($primary-colors, dark);
+                    border-color: map-get($primary-colors, dark);
+                  }
+                }
+              }
+            }
+
+            .ant-select {
+              .ant-select-selector {
+                background: #262626;
+                border-color: #434343;
+                color: rgba(255, 255, 255, 0.85);
+
+                &:hover, &:focus {
+                  border-color: map-get($primary-colors, main);
+                }
+              }
+            }
+
+            .ant-input-number {
+              background: #262626;
+              border-color: #434343;
+              color: rgba(255, 255, 255, 0.85);
+
+              &:hover, &:focus {
+                border-color: map-get($primary-colors, main);
+              }
+
+              .ant-input-number-input {
+                background: transparent;
+                color: rgba(255, 255, 255, 0.85);
+              }
+            }
+
+            .ant-switch {
+              background: #434343;
+
+              &.ant-switch-checked {
+                background: map-get($primary-colors, main);
+              }
+
+              .ant-switch-handle {
+                &::before {
+                  background: #fff;
+                }
+              }
+            }
+          }
+        }
+
+        .ant-divider {
+          border-color: #434343;
+        }
+      }
+
+      .settings-actions {
+        .ant-btn {
+          &.ant-btn-default {
+            background: #262626;
+            border-color: #434343;
+            color: rgba(255, 255, 255, 0.85);
+
+            &:hover {
+              border-color: map-get($primary-colors, main);
+              color: map-get($primary-colors, main);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 响应式调整
+@media (max-width: map-get($breakpoints, lg)) {
+  .settings {
+    .settings-form {
+      .settings-card {
+        margin-bottom: map-get($spacing, md);
+
+        .ant-card-body {
+          padding: map-get($spacing, md);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: map-get($breakpoints, md)) {
+  .settings {
+    .page-header {
+      margin-bottom: map-get($spacing, md);
+      padding-bottom: map-get($spacing, sm);
+
+      h2 {
+        font-size: map-get($font-sizes, h3);
+      }
+    }
+
+    .settings-form {
+      .settings-card {
+        .ant-card-body {
+          padding: map-get($spacing, sm);
+        }
+
+        .ant-form-item {
+          margin-bottom: map-get($spacing, sm);
+
+          .ant-form-item-label > label {
+            font-size: map-get($font-sizes, small);
+          }
+        }
+      }
+
+      .settings-actions {
+        .ant-card-body {
+          padding: map-get($spacing, md);
+        }
+
+        .ant-space {
+          width: 100%;
+
+          .ant-btn {
+            flex: 1;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: map-get($breakpoints, sm)) {
+  .settings {
+    .settings-form {
+      .settings-actions {
+        .ant-space {
+          .ant-space-item {
+            flex: 1;
+
+            .ant-btn {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

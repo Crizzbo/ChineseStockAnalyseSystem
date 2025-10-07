@@ -1,0 +1,245 @@
+.sectors-container {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: 100vh;
+
+  .sectors-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    background: #fff;
+    padding: 20px 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .header-title {
+      h2 {
+        margin-bottom: 4px;
+        color: #262626;
+      }
+    }
+
+    .header-actions {
+      .ant-select, .ant-input-search {
+        border-radius: 6px;
+      }
+    }
+  }
+
+  .sector-card {
+    height: auto;
+    min-height: 300px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .ant-card-body {
+      padding: 20px;
+    }
+
+    .sector-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0f0f0;
+
+      .sector-info {
+        .sector-name {
+          margin-bottom: 4px;
+          color: #262626;
+          font-size: 16px;
+          line-height: 1.2;
+        }
+
+        .sector-code {
+          font-size: 12px;
+          color: #8c8c8c;
+        }
+      }
+
+      .sector-price {
+        text-align: right;
+
+        .current-price {
+          display: block;
+          font-size: 18px;
+          font-weight: bold;
+          color: #262626;
+          margin-bottom: 4px;
+        }
+
+        .change-tag {
+          font-size: 12px;
+          padding: 2px 6px;
+          border-radius: 4px;
+        }
+      }
+    }
+
+    .sector-metrics {
+      margin-bottom: 16px;
+
+      .metric-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 4px 0;
+        color: #595959;
+        font-size: 13px;
+
+        &:not(:last-child) {
+          border-bottom: 1px solid #f5f5f5;
+        }
+      }
+    }
+
+    .leading-stocks {
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      border-left: 3px solid #1890ff;
+    }
+
+    .sector-stocks {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #f0f0f0;
+
+      .ant-list-item {
+        padding: 6px 0;
+        border-bottom: none;
+      }
+
+      .stock-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        .stock-name {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          .ant-typography {
+            line-height: 1.2;
+          }
+        }
+
+        .stock-price {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          text-align: right;
+
+          .ant-typography {
+            line-height: 1.2;
+          }
+        }
+      }
+
+      .more-stocks {
+        text-align: center;
+        padding: 8px 0;
+        color: #8c8c8c;
+      }
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// 深色主题适配
+[data-theme='dark'] {
+  .sectors-container {
+    background: #141414;
+
+    .sectors-header {
+      background: #1f1f1f;
+      color: #fff;
+
+      .header-title h2 {
+        color: #fff;
+      }
+    }
+
+    .sector-card {
+      background: #1f1f1f;
+      border-color: #303030;
+
+      .sector-header {
+        border-bottom-color: #303030;
+
+        .sector-name {
+          color: #fff;
+        }
+      }
+
+      .sector-metrics .metric-row {
+        color: #d9d9d9;
+        border-bottom-color: #262626;
+      }
+
+      .leading-stocks {
+        background: #262626;
+        color: #d9d9d9;
+      }
+
+      .sector-stocks {
+        border-top-color: #303030;
+      }
+    }
+
+    .empty-state {
+      background: #1f1f1f;
+      color: #d9d9d9;
+    }
+  }
+}
+
+// 响应式布局
+@media (max-width: 768px) {
+  .sectors-container {
+    padding: 16px;
+
+    .sectors-header {
+      flex-direction: column;
+      gap: 16px;
+      align-items: stretch;
+
+      .header-actions {
+        .ant-space {
+          justify-content: space-between;
+          width: 100%;
+        }
+      }
+    }
+
+    .sector-card {
+      .sector-header {
+        flex-direction: column;
+        gap: 12px;
+
+        .sector-price {
+          text-align: left;
+        }
+      }
+    }
+  }
+}

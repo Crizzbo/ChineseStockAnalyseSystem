@@ -1,0 +1,127 @@
+@use '@assets/styles/variables' as *;
+
+.app-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 200px;
+  z-index: 999;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  padding: 0 map-get($spacing, lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: left 0.3s ease;
+
+  &.sidebar-collapsed {
+    left: 80px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+
+    .sidebar-trigger {
+      margin-right: map-get($spacing, md);
+    }
+
+    .breadcrumb-container {
+      .page-title {
+        font-size: map-get($font-sizes, h4);
+        font-weight: 600;
+        color: map-get($text-colors, primary);
+      }
+    }
+  }
+
+  .header-right {
+    .header-action {
+      color: map-get($text-colors, secondary);
+
+      &:hover {
+        color: map-get($primary-colors, main);
+        background-color: rgba(24, 144, 255, 0.1);
+      }
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: map-get($spacing, xs) map-get($spacing, sm);
+      border-radius: map-get($border-radius, base);
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+
+      .user-avatar {
+        margin-right: map-get($spacing, xs);
+      }
+
+      .username {
+        font-size: map-get($font-sizes, base);
+        color: map-get($text-colors, primary);
+      }
+    }
+  }
+
+  // 通知菜单样式
+  :global(.ant-dropdown) {
+    .notification-item {
+      padding: map-get($spacing, sm);
+      max-width: 300px;
+
+      .notification-title {
+        font-weight: 600;
+        font-size: map-get($font-sizes, small);
+        color: map-get($text-colors, primary);
+        margin-bottom: 4px;
+      }
+
+      .notification-message {
+        font-size: map-get($font-sizes, small);
+        color: map-get($text-colors, secondary);
+        line-height: 1.4;
+        margin-bottom: 4px;
+      }
+
+      .notification-time {
+        font-size: map-get($font-sizes, mini);
+        color: map-get($text-colors, tertiary);
+      }
+    }
+  }
+
+  @media (max-width: map-get($breakpoints, lg)) {
+    left: 0;
+    right: 0;
+    padding: 0 map-get($spacing, md);
+
+    &.sidebar-collapsed {
+      left: 0;
+    }
+  }
+
+  @media (max-width: map-get($breakpoints, sm)) {
+    padding: 0 map-get($spacing, sm);
+
+    .header-left {
+      .breadcrumb-container {
+        .page-title {
+          font-size: map-get($font-sizes, base);
+        }
+      }
+    }
+
+    .header-right {
+      .user-info {
+        .username {
+          display: none;
+        }
+      }
+    }
+  }
+}

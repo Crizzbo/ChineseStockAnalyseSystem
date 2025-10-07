@@ -1,0 +1,78 @@
+@use '@assets/styles/variables' as *;
+
+.auth-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: map-get($spacing, lg);
+
+  .auth-card {
+    width: 100%;
+    max-width: 400px;
+    box-shadow: $box-shadow-large;
+
+    .ant-card {
+      border-radius: map-get($border-radius, large);
+      border: none;
+
+      .ant-card-body {
+        padding: map-get($spacing, xxl) map-get($spacing, xl);
+      }
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: map-get($spacing, xl);
+
+      .ant-typography {
+        margin-bottom: map-get($spacing, xs);
+      }
+    }
+
+    .ant-form {
+      .ant-form-item {
+        margin-bottom: map-get($spacing, lg);
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .ant-input-affix-wrapper,
+      .ant-input {
+        height: 48px;
+        border-radius: map-get($border-radius, base);
+      }
+
+      .ant-btn {
+        height: 48px;
+        border-radius: map-get($border-radius, base);
+        font-weight: 500;
+      }
+    }
+
+    .ant-divider {
+      margin: map-get($spacing, lg) 0;
+
+      .ant-divider-inner-text {
+        padding: 0 map-get($spacing, md);
+      }
+    }
+
+    .auth-footer {
+      margin-top: map-get($spacing, md);
+    }
+  }
+
+  @media (max-width: map-get($breakpoints, sm)) {
+    padding: map-get($spacing, md);
+
+    .auth-card {
+      .ant-card-body {
+        padding: map-get($spacing, xl) map-get($spacing, lg);
+      }
+    }
+  }
+}
