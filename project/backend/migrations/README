@@ -1,0 +1,16 @@
+数据库迁移文件夹
+
+这个文件夹包含了Flask-Migrate（基于Alembic）的数据库迁移文件。
+
+常用命令：
+1. 初始化迁移环境：flask db init
+2. 生成迁移文件：flask db migrate -m "描述信息"
+3. 执行迁移：flask db upgrade
+4. 回滚迁移：flask db downgrade
+5. 查看历史：flask db history
+6. 查看当前版本：flask db current
+
+注意事项：
+- 每次修改模型后都要生成新的迁移文件
+- 在生产环境中要谨慎执行迁移操作
+- 建议在执行迁移前备份数据库
