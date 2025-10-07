@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import MainLayout from '@components/layout/MainLayout'
-import PrivateRoute from './PrivateRoute'
 import ErrorBoundary from '@components/common/ErrorBoundary'
 import PageLoading from '@components/common/PageLoading'
 
@@ -27,14 +26,10 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* 主应用路由 */}
+        {/* 主应用路由 - 开发模式:无需登录 */}
         <Route
           path="/"
-          element={
-            <PrivateRoute>
-              <MainLayout />
-            </PrivateRoute>
-          }
+          element={<MainLayout />}
         >
           {/* 默认重定向到仪表盘 */}
           <Route index element={<Navigate to="/dashboard" replace />} />
