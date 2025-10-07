@@ -76,14 +76,6 @@ const Dashboard: React.FC = () => {
         </Button>
       </div>
 
-      <Alert
-        message="模拟登录系统已启用"
-        description="当前使用模拟认证系统，测试账号请查看浏览器控制台。"
-        type="info"
-        showIcon
-        style={{ marginBottom: 24 }}
-      />
-
       <Row gutter={[16, 16]}>
         <Col span={24} lg={8}>
           <UserInfo />
