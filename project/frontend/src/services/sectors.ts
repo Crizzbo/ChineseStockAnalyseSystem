@@ -4,6 +4,7 @@
 import api from './api'
 
 export interface SectorInfo {
+  rank: number
   code: string
   name: string
   currentPrice: number
@@ -11,7 +12,13 @@ export interface SectorInfo {
   changePercent: number
   volume: number
   turnover: number
+  totalTurnover: number
+  turnoverRate: number
   stockCount: number
+  upCount: number
+  downCount: number
+  leadingStock: string
+  leadingStockChange: number
   leadingStocks: string[]
   description?: string
 }
@@ -24,9 +31,13 @@ export interface SectorStock {
   changePercent: number
   volume: number
   turnover: number
-  marketCap: number
-  pe?: number
-  pb?: number
+  marketCap: number | null
+  pe?: number | null
+  pb?: number | null
+  turnoverRate?: number | null
+  amplitude?: number | null
+  highest?: number | null
+  lowest?: number | null
 }
 
 export interface SectorsResult {
@@ -37,10 +48,12 @@ export interface SectorsResult {
 
 export interface SectorStocksResult {
   sector_code: string
-  sector_name: string
+  sector_name?: string
   stocks: SectorStock[]
   total: number
-  timestamp: string
+  totalVolume: number
+  totalTurnover: number
+  timestamp: string | null
 }
 
 export interface SectorAnalysis {

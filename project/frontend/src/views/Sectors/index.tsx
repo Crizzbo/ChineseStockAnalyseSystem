@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Row, Col, List, Typography, Tag, Spin, Space, Progress, Button, Input, Select } from 'antd'
-import { RiseOutlined, FallOutlined, SearchOutlined, ReloadOutlined } from '@ant-design/icons'
+import { Card, Row, Col, List, Typography, Tag, Spin, Space, Progress, Button, Input, Select, Badge } from 'antd'
+import { RiseOutlined, FallOutlined, SearchOutlined, ReloadOutlined, TrophyOutlined } from '@ant-design/icons'
 import { sectorsService } from '@services/sectors'
 import './Sectors.scss'
 
@@ -9,6 +9,7 @@ const { Search } = Input
 const { Option } = Select
 
 export interface SectorInfo {
+  rank: number
   code: string
   name: string
   currentPrice: number
@@ -16,7 +17,12 @@ export interface SectorInfo {
   changePercent: number
   volume: number
   turnover: number
+  turnoverRate: number
   stockCount: number
+  upCount: number
+  downCount: number
+  leadingStock: string
+  leadingStockChange: number
   leadingStocks: string[]
   description?: string
 }
@@ -44,7 +50,7 @@ const Sectors: React.FC = () => {
   const loadSectors = async () => {
     try {
       setLoading(true)
-      const response = await sectorsService.getSectors()
+      const response = await sectorsService.getSectors(8)
       setSectors(response.sectors || [])
     } catch (error) {
       console.error('获取板块数据失败:', error)
@@ -55,20 +61,20 @@ const Sectors: React.FC = () => {
   }
 
   // 加载板块股票
-  const loadSectorStocks = async (sectorCode: string) => {
-    if (sectorStocks[sectorCode]) return
+  const loadSectorStocks = async (sectorName: string) => {
+    if (sectorStocks[sectorName]) return
 
     try {
-      const response = await sectorsService.getSectorStocks(sectorCode)
+      const response = await sectorsService.getSectorStocks(sectorName)
       setSectorStocks(prev => ({
         ...prev,
-        [sectorCode]: response.stocks || []
+        [sectorName]: response.stocks || []
       }))
     } catch (error) {
-      console.error(`获取板块${sectorCode}股票失败:`, error)
+      console.error(`获取板块${sectorName}股票失败:`, error)
       setSectorStocks(prev => ({
         ...prev,
-        [sectorCode]: []
+        [sectorName]: []
       }))
     }
   }
@@ -162,11 +168,24 @@ const Sectors: React.FC = () => {
                 <Card
                   className="sector-card"
                   hoverable
-                  onClick={() => loadSectorStocks(sector.code)}
+                  onClick={() => loadSectorStocks(sector.name)}
                 >
+                  {sector.rank <= 3 && (
+                    <div className="rank-badge">
+                      <TrophyOutlined
+                        style={{
+                          fontSize: 24,
+                          color: sector.rank === 1 ? '#FFD700' : sector.rank === 2 ? '#C0C0C0' : '#CD7F32'
+                        }}
+                      />
+                    </div>
+                  )}
                   <div className="sector-header">
                     <div className="sector-info">
-                      <Title level={4} className="sector-name">{sector.name}</Title>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <Text type="secondary" style={{ fontSize: 12, minWidth: 30 }}>#{sector.rank}</Text>
+                        <Title level={4} className="sector-name">{sector.name}</Title>
+                      </div>
                       <Text type="secondary" className="sector-code">{sector.code}</Text>
                     </div>
                     <div className="sector-price">
@@ -184,35 +203,47 @@ const Sectors: React.FC = () => {
                   </div>
 
                   <div className="sector-metrics">
-                    <Space direction="vertical" style={{ width: '100%' }}>
+                    <Space direction="vertical" style={{ width: '100%' }} size="small">
                       <div className="metric-row">
-                        <span>成交量</span>
-                        <span>{formatVolume(sector.volume)}</span>
+                        <span>总市值</span>
+                        <span>¥{formatVolume(sector.turnover || 0)}</span>
                       </div>
                       <div className="metric-row">
-                        <span>成交额</span>
-                        <span>¥{formatVolume(sector.turnover)}</span>
+                        <span>换手率</span>
+                        <span>{(sector.turnoverRate || 0).toFixed(2)}%</span>
                       </div>
                       <div className="metric-row">
-                        <span>股票数量</span>
-                        <span>{sector.stockCount}只</span>
+                        <span>成分股</span>
+                        <span className="stock-counts">
+                          <Text style={{ color: '#52c41a' }}>{sector.upCount || 0}↑</Text>
+                          <Text type="secondary"> / </Text>
+                          <Text style={{ color: '#ff4d4f' }}>{sector.downCount || 0}↓</Text>
+                          <Text type="secondary"> / </Text>
+                          <Text>{sector.stockCount || 0}只</Text>
+                        </span>
                       </div>
+                      {sector.leadingStock && (
+                        <div className="metric-row leading-stock-row">
+                          <span>领涨股</span>
+                          <span className="leading-stock-info">
+                            <Text strong>{sector.leadingStock}</Text>
+                            <Tag
+                              color={(sector.leadingStockChange || 0) >= 0 ? 'error' : 'success'}
+                              style={{ marginLeft: 4, fontSize: 11 }}
+                            >
+                              {formatPercent(sector.leadingStockChange || 0)}
+                            </Tag>
+                          </span>
+                        </div>
+                      )}
                     </Space>
                   </div>
 
-                  {sector.leadingStocks && sector.leadingStocks.length > 0 && (
-                    <div className="leading-stocks">
-                      <Text type="secondary" style={{ fontSize: 12 }}>
-                        龙头股：{sector.leadingStocks.join('、')}
-                      </Text>
-                    </div>
-                  )}
-
-                  {sectorStocks[sector.code] && (
+                  {sectorStocks[sector.name] && (
                     <div className="sector-stocks">
                       <List
                         size="small"
-                        dataSource={sectorStocks[sector.code].slice(0, 5)}
+                        dataSource={sectorStocks[sector.name].slice(0, 5)}
                         renderItem={(stock) => (
                           <List.Item>
                             <div className="stock-item">
@@ -239,10 +270,10 @@ const Sectors: React.FC = () => {
                           </List.Item>
                         )}
                       />
-                      {sectorStocks[sector.code].length > 5 && (
+                      {sectorStocks[sector.name].length > 5 && (
                         <div className="more-stocks">
                           <Text type="secondary" style={{ fontSize: 12 }}>
-                            +{sectorStocks[sector.code].length - 5}只股票...
+                            +{sectorStocks[sector.name].length - 5}只股票...
                           </Text>
                         </div>
                       )}

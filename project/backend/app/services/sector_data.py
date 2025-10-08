@@ -54,23 +54,41 @@ class SectorDataService:
 
             results = []
             if sector_df is not None and not sector_df.empty:
+                logger.info(f"成功获取板块数据，共 {len(sector_df)} 条记录")
                 for _, row in sector_df.head(limit).iterrows():
                     try:
+                        # 计算成分股数量 = 上涨家数 + 下跌家数
+                        up_count = int(row['上涨家数']) if '上涨家数' in row and row['上涨家数'] != '-' else 0
+                        down_count = int(row['下跌家数']) if '下跌家数' in row and row['下跌家数'] != '-' else 0
+                        stock_count = up_count + down_count
+
+                        # 获取领涨股票信息
+                        leading_stock = str(row['领涨股票']) if '领涨股票' in row and row['领涨股票'] and row['领涨股票'] != '-' else ''
+                        leading_stock_change = float(row['领涨股票-涨跌幅']) if '领涨股票-涨跌幅' in row and row['领涨股票-涨跌幅'] != '-' else 0.0
+
                         results.append({
+                            'rank': int(row['排名']) if '排名' in row and row['排名'] != '-' else 0,
                             'code': row['板块代码'] if '板块代码' in row else row['板块名称'],
                             'name': row['板块名称'],
                             'currentPrice': float(row['最新价']) if '最新价' in row else 0.0,
                             'change': float(row['涨跌额']) if '涨跌额' in row else 0.0,
                             'changePercent': float(row['涨跌幅']) if '涨跌幅' in row else 0.0,
-                            'volume': int(row['成交量']) if '成交量' in row and row['成交量'] != '-' else 0,
-                            'turnover': float(row['成交额']) if '成交额' in row and row['成交额'] != '-' else 0.0,
-                            'stockCount': int(row['成分股数量']) if '成分股数量' in row else 0,
-                            'leadingStocks': []
+                            'volume': 0,  # 暂不计算,需要时通过成分股累加
+                            'turnover': float(row['总市值']) if '总市值' in row and row['总市值'] != '-' else 0.0,
+                            'totalTurnover': 0.0,  # 暂不计算,需要时通过成分股累加
+                            'turnoverRate': float(row['换手率']) if '换手率' in row and row['换手率'] != '-' else 0.0,
+                            'stockCount': stock_count,
+                            'upCount': up_count,
+                            'downCount': down_count,
+                            'leadingStock': leading_stock,
+                            'leadingStockChange': leading_stock_change,
+                            'leadingStocks': [leading_stock] if leading_stock else []  # 保持兼容性
                         })
                     except Exception as parse_error:
                         logger.warning(f"解析板块数据失败: {parse_error}")
                         continue
 
+            logger.info(f"成功处理 {len(results)} 个板块")
             return results
 
         except Exception as e:
@@ -105,6 +123,7 @@ class SectorDataService:
 
             results = []
             if stocks_df is not None and not stocks_df.empty:
+                logger.info(f"成功获取板块 {sector_code} 成分股数据，共 {len(stocks_df)} 条记录")
                 for _, row in stocks_df.iterrows():
                     try:
                         results.append({
@@ -115,14 +134,19 @@ class SectorDataService:
                             'changePercent': float(row['涨跌幅']),
                             'volume': int(row['成交量']) if row['成交量'] != '-' else 0,
                             'turnover': float(row['成交额']) if row['成交额'] != '-' else 0.0,
-                            'marketCap': float(row['总市值']) if '总市值' in row and row['总市值'] != '-' else None,
+                            'marketCap': None,  # 成分股API不提供总市值字段
                             'pe': float(row['市盈率-动态']) if '市盈率-动态' in row and row['市盈率-动态'] != '-' else None,
-                            'pb': float(row['市净率']) if '市净率' in row and row['市净率'] != '-' else None
+                            'pb': float(row['市净率']) if '市净率' in row and row['市净率'] != '-' else None,
+                            'turnoverRate': float(row['换手率']) if '换手率' in row and row['换手率'] != '-' else None,
+                            'amplitude': float(row['振幅']) if '振幅' in row and row['振幅'] != '-' else None,
+                            'highest': float(row['最高']) if '最高' in row and row['最高'] != '-' else None,
+                            'lowest': float(row['最低']) if '最低' in row and row['最低'] != '-' else None
                         })
                     except Exception as parse_error:
                         logger.warning(f"解析成分股数据失败: {parse_error}")
                         continue
 
+            logger.info(f"成功处理板块 {sector_code} 的 {len(results)} 只成分股")
             return results
 
         except Exception as e:

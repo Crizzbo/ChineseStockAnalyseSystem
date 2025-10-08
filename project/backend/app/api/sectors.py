@@ -88,14 +88,25 @@ def get_sector_stocks(sector_code: str):
         if not sector_code:
             return error_response("板块代码不能为空", 400)
 
+        # URL解码
+        from urllib.parse import unquote
+        sector_code = unquote(sector_code)
+        logger.info(f"获取板块成分股: {sector_code}")
+
         # 获取成分股数据
         stocks = sector_service.get_sector_stocks(sector_code)
+
+        # 计算总成交量和成交额
+        total_volume = sum(stock.get('volume', 0) for stock in stocks)
+        total_turnover = sum(stock.get('turnover', 0.0) for stock in stocks)
 
         return success_response(
             data={
                 'sector_code': sector_code,
                 'stocks': stocks,
                 'total': len(stocks),
+                'totalVolume': total_volume,
+                'totalTurnover': total_turnover,
                 'timestamp': None
             },
             message="获取板块成分股成功"
