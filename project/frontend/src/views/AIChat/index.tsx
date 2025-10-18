@@ -311,7 +311,7 @@ const AIChat: React.FC = () => {
                 <Radio.Button value="backend">
                   <Space>
                     <RobotOutlined />
-                    后端AI
+                    Copilot AI
                   </Space>
                 </Radio.Button>
                 <Radio.Button value="claude" disabled={!claudeAvailable}>
@@ -322,6 +322,11 @@ const AIChat: React.FC = () => {
                   </Space>
                 </Radio.Button>
               </Radio.Group>
+              {aiService === 'backend' && (
+                <Text type="success" style={{ fontSize: 11 }}>
+                  ✓ Copilot AI已准备就绪
+                </Text>
+              )}
               {aiService === 'claude' && claudeAvailable && (
                 <Text type="success" style={{ fontSize: 11 }}>
                   ✓ Claude已配置并可用

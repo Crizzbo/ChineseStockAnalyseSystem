@@ -151,6 +151,8 @@ def get_hot_stocks():
             return error_response('数量限制必须在1-100之间', 400)
 
         hot_stocks = stock_service.get_hot_stocks(limit)
+        if hot_stocks is None:
+            hot_stocks = []
 
         return success_response({
             'stocks': hot_stocks,

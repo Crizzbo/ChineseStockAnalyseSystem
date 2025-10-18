@@ -97,52 +97,6 @@ class StockDataService:
         except (ValueError, TypeError):
             return default
 
-    def _get_fallback_data(self):
-        """获取模拟数据作为后备方案"""
-        import random
-
-        # 创建模拟股票数据
-        mock_stocks = []
-        stock_names = [
-            ('000001', '平安银行'), ('000002', '万科A'), ('000858', '五粮液'),
-            ('000651', '格力电器'), ('000725', '京东方A'), ('600036', '招商银行'),
-            ('600519', '贵州茅台'), ('600000', '浦发银行'), ('601318', '中国平安'),
-            ('002415', '海康威视'), ('000776', '广发证券'), ('600276', '恒瑞医药'),
-            ('002230', '科大讯飞'), ('300059', '东方财富'), ('002594', '比亚迪'),
-            ('600887', '伊利股份'), ('000963', '华东医药'), ('002304', '洋河股份'),
-            ('300750', '宁德时代'), ('688981', '中芯国际')
-        ]
-
-        for i, (code, name) in enumerate(stock_names):
-            base_price = random.uniform(10, 200)
-            change_percent = random.uniform(-9.8, 9.8)
-            change_amount = base_price * change_percent / 100
-
-            mock_stocks.append({
-                '代码': code,
-                '名称': name,
-                '最新价': round(base_price, 2),
-                '涨跌额': round(change_amount, 2),
-                '涨跌幅': round(change_percent, 2),
-                '成交量': random.randint(100000, 50000000),
-                '成交额': random.randint(1000000, 5000000000),
-                '最高': round(base_price * random.uniform(1.0, 1.1), 2),
-                '最低': round(base_price * random.uniform(0.9, 1.0), 2),
-                '今开': round(base_price * random.uniform(0.95, 1.05), 2),
-                '昨收': round(base_price - change_amount, 2),
-                '总市值': random.randint(10000000000, 1000000000000),
-                '市盈率-动态': round(random.uniform(5, 50), 2),
-                '市净率': round(random.uniform(0.5, 5), 2),
-                '换手率': round(random.uniform(0.1, 15), 2),
-                '量比': round(random.uniform(0.5, 3), 2)
-            })
-
-        # 转换为DataFrame格式
-        if pd is not None:
-            return pd.DataFrame(mock_stocks)
-        else:
-            # 如果pandas不可用，返回字典列表
-            return mock_stocks
 
     def _get_cached_spot_data(self):
         """获取缓存的实时股票数据"""
@@ -177,9 +131,8 @@ class StockDataService:
                 logger.info("使用过期缓存数据")
                 return self._cached_spot_data
 
-            # 使用模拟数据作为最后的后备方案
-            logger.warning("使用模拟数据作为后备方案")
-            return self._get_fallback_data()
+            # 不使用模拟数据，返回None
+            return None
 
     def search_stocks(self, keyword: str, limit: int = 10) -> List[Dict[str, Any]]:
         """搜索股票 - 使用AkShare真实数据"""

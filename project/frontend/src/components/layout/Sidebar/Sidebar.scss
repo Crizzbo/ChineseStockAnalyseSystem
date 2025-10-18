@@ -16,21 +16,26 @@
     justify-content: center;
     border-bottom: 1px solid #f0f0f0;
     padding: 0 map-get($spacing, md);
+    overflow: hidden;
 
     .logo {
       display: flex;
       align-items: center;
       color: map-get($primary-colors, main);
+      max-width: 100%;
 
       .logo-icon {
         font-size: 24px;
         margin-right: map-get($spacing, xs);
+        flex-shrink: 0;
       }
 
       .logo-text {
         font-size: map-get($font-sizes, h4);
         font-weight: 600;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

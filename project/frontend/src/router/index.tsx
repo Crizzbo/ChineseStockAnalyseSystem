@@ -16,6 +16,7 @@ const AIChat = lazy(() => import('@views/AIChat'))
 const Settings = lazy(() => import('@views/Settings'))
 const Login = lazy(() => import('@views/Auth/Login'))
 const Register = lazy(() => import('@views/Auth/Register'))
+const FundamentalAnalysis = lazy(() => import('@views/FundamentalAnalysis'))
 
 const AppRouter = () => {
   return (
@@ -40,6 +41,10 @@ const AppRouter = () => {
           {/* 股票分析 */}
           <Route path="analysis" element={<StockAnalysis />} />
           <Route path="analysis/:symbol" element={<StockAnalysis />} />
+
+          {/* 基本面分析 */}
+          <Route path="fundamental" element={<FundamentalAnalysis />} />
+          <Route path="fundamental/:symbol" element={<FundamentalAnalysis />} />
 
           {/* 投资组合 */}
           <Route path="portfolio" element={<Portfolio />} />

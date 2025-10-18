@@ -5,7 +5,9 @@ import axios, { type AxiosResponse, AxiosError } from 'axios'
 import { message } from 'antd'
 
 // API 基础配置
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001'
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
+
+export const API_BASE_URL = BASE_URL
 
 // 创建 axios 实例
 const api = axios.create({

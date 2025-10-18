@@ -16,7 +16,10 @@
       "Bash(taskkill:*)",
       "Bash(dir projectbackend)",
       "Bash(dir projectfrontend)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(git commit:*)",
+      "Bash(git add:*)",
+      "Bash(timeout 3)"
     ],
     "deny": [],
     "ask": []

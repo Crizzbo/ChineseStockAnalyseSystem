@@ -49,9 +49,13 @@ def get_market_overview():
     try:
         # 获取主要指数
         indices = stock_service.get_market_indices()
+        if indices is None:
+            indices = []
 
         # 获取热门股票
         hot_stocks = stock_service.get_hot_stocks(limit=10)
+        if hot_stocks is None:
+            hot_stocks = []
 
         # 计算市场统计信息
         market_stats = {

@@ -30,6 +30,10 @@ def create_app(config_name='development'):
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+    # Copilot AI Configuration
+    from app.config.copilot_config import COPILOT_AI_CONFIG
+    app.config['COPILOT_AI'] = COPILOT_AI_CONFIG
+
     # CORS Configuration - 允许所有来源用于开发
     CORS(app, origins="*", allow_headers="*", methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
 
@@ -39,6 +43,9 @@ def create_app(config_name='development'):
     migrate.init_app(app, db)
     socketio.init_app(app, cors_allowed_origins="*", async_mode='threading')
 
+    # Initialize AI Service
+    from app.services.copilot_chat import copilot_chat_service
+
     # Register Blueprints
     from app.api.auth import auth_bp
     from app.api.stocks import stocks_bp
@@ -46,9 +53,10 @@ def create_app(config_name='development'):
     from app.api.portfolio import portfolio_bp
     from app.api.market import market_bp
     from app.api.sectors import sectors_bp
-    from app.api.ai_chat import ai_bp
+    from app.api.copilot_chat import ai_bp  # 使用新的Copilot AI服务
     from app.api.user import user_bp
     from app.api.test import test_bp
+    from app.api.fundamental import fundamental_bp
 
     app.register_blueprint(auth_bp, url_prefix='/api/v1/auth')
     app.register_blueprint(stocks_bp, url_prefix='/api/v1/stocks')
@@ -59,6 +67,7 @@ def create_app(config_name='development'):
     app.register_blueprint(ai_bp, url_prefix='/api/v1/ai')
     app.register_blueprint(user_bp, url_prefix='/api/v1/user')
     app.register_blueprint(test_bp, url_prefix='/api/v1/test')
+    app.register_blueprint(fundamental_bp, url_prefix='/api/v1/fundamental')
 
     # Register WebSocket events
     from app.websocket import events

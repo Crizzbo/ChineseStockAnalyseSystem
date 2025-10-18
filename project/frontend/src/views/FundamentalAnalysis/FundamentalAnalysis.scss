@@ -1,0 +1,241 @@
+.fundamental-analysis-container {
+  padding: 24px;
+  min-height: calc(100vh - 64px);
+  background: #f0f2f5;
+  position: relative;
+  z-index: 1;
+
+  .page-header {
+    margin-bottom: 24px;
+    background: #f0f2f5;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: #1890ff;
+      text-align: left;
+      background: #f0f2f5;
+      flex-shrink: 0;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+  }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    color: #999;
+
+    p {
+      margin-top: 16px;
+      font-size: 16px;
+    }
+  }
+
+  .stock-info-card {
+    h3 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: #262626;
+    }
+  }
+
+  .overview-card {
+    margin-bottom: 16px;
+
+    .score-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 0;
+
+      .score-label {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 16px;
+      }
+
+      .score-level {
+        margin-top: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #1890ff;
+      }
+    }
+  }
+
+  .analysis-card {
+    height: 100%;
+
+    .score-summary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 0;
+      font-size: 16px;
+
+      span {
+        margin-right: 8px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .financial-data-card {
+    .ant-card-head .ant-card-extra {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .financial-tables {
+      .table-section {
+        margin-bottom: 24px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        h4 {
+          margin: 0 0 12px 0;
+          font-size: 16px;
+          font-weight: 600;
+          color: #262626;
+          padding-bottom: 8px;
+          border-bottom: 2px solid #f0f0f0;
+        }
+
+        .ant-table {
+          font-size: 14px;
+
+          .ant-table-cell {
+            padding: 8px 12px;
+          }
+
+          .table-meta {
+            margin-bottom: 8px;
+            color: #666;
+            font-size: 12px;
+          }
+
+          .section-row {
+            td {
+              background: #fafafa;
+              font-weight: 700;
+              color: #262626;
+              border-top: 2px solid #f0f0f0;
+            }
+          }
+
+          .total-row {
+            td {
+              background: #fffbe6;
+              font-weight: 700;
+              color: #000;
+            }
+          }
+
+          tbody tr {
+            &:hover {
+              background-color: #fafafa;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .recommendation-card {
+    .recommendation-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .label {
+        font-size: 16px;
+        font-weight: 500;
+        color: #262626;
+      }
+    }
+
+    .reasons-section,
+    .risks-section {
+      .section-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: #262626;
+        margin-bottom: 12px;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 24px;
+
+        li {
+          margin-bottom: 8px;
+          line-height: 1.6;
+          color: #595959;
+        }
+      }
+    }
+
+    .risks-section {
+      .section-title {
+        color: #ff4d4f;
+      }
+
+      ul li {
+        color: #ff4d4f;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+
+    .page-header {
+      h2 {
+        font-size: 20px;
+      }
+
+      .search-bar {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+
+        .ant-input-search {
+          width: 100% !important;
+        }
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -10,7 +10,8 @@ import {
   StockOutlined,
   FolderOutlined,
   AppstoreOutlined,
-  RobotOutlined
+  RobotOutlined,
+  FundOutlined
 } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import './Sidebar.scss'
@@ -37,6 +38,12 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
       icon: <LineChartOutlined />,
       label: '股票分析',
       onClick: () => navigate('/analysis'),
+    },
+    {
+      key: '/fundamental',
+      icon: <FundOutlined />,
+      label: '基本面分析',
+      onClick: () => navigate('/fundamental'),
     },
     {
       key: '/portfolio',
@@ -95,6 +102,9 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
     const pathname = location.pathname
     if (pathname.startsWith('/analysis')) {
       return ['/analysis']
+    }
+    if (pathname.startsWith('/fundamental')) {
+      return ['/fundamental']
     }
     return [pathname]
   }
